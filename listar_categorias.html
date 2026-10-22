@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar categorias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias.css') }}">
+</head>
+<body>
+    <div class="header">
+        <img class="logo_branca" src="{{ url_for('static', filename='img/logo_branca.png') }}" alt="">
+        <div class="inicio_relatorio_previsao">
+            <a href="{{ url_for('dashboard') }}">Início</a>
+        </div>
+        <div class="icone_e_nome">
+            <div class="icone_user"></div>
+            <a href="{{ url_for('editar_usuario') }}"><p class="nome_user">Olá, {{ nome }}</p></a>
+            <a href="{{ url_for('logout') }}" class="logout"><img src="{{ url_for('static', filename='img/logout.png') }}" alt="Sair"></a>
+        </div>
+    </div>
+
+    <main>
+        <div class="esquerda">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Meu Salário">
+        </div>
+        <div class="direita">
+            <div class="conteudo-categorias">
+                <a href="{{ url_for('categorias') }}" class="voltar">Voltar ao cadastro</a>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+
+                <h2>Editar categorias</h2>
+                <p class="descricao-titulo">Edite ou exclua suas categorias.</p>
+
+                {% if categorias %}
+                    <div class="lista-categorias">
+                        {% for categoria in categorias %}
+                        <div class="categoria-item">
+                            <span>{{ categoria[1] }}</span>
+                            {% if categoria[0] not in [1001, 1002] %}
+                            <div class="acoes-categoria">
+                                <a class="botao-editar" href="{{ url_for('editar_categorias', id=categoria[0]) }}">Editar</a>
+                                <form action="{{ url_for('excluir_categoria', id=categoria[0]) }}" method="post" onsubmit="return confirm('Deseja excluir esta categoria?');">
+                                    <button class="botao-excluir" type="submit">Excluir</button>
+                                </form>
+                            </div>
+                            {% else %}
+                            <span class="categoria-padrao">Categoria padrão</span>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="sem-categorias">Nenhuma categoria cadastrada.</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
