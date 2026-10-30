@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar categoria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_categorias.css') }}">
+</head>
+<body>
+    <div class="header">
+        <img class="logo_branca" src="{{ url_for('static', filename='img/logo_branca.png') }}" alt="">
+        <div class="inicio_relatorio_previsao">
+            <a href="{{ url_for('dashboard') }}">Início</a>
+        </div>
+        <div class="icone_e_nome">
+             <a class="icone_user">
+                <img src="{{ url_for('static', filename=img) }}" alt="Foto de usuário">
+            </a>
+            <a href="{{ url_for('editar_usuario') }}"><p class="nome_user">Olá, {{ nome }}</p></a>
+            <a href="{{ url_for('logout') }}" class="logout"><img src="{{ url_for('static', filename='img/logout.png') }}" alt="Sair"></a>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="esquerda">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Meu Salário">
+        </div>
+        <div class="direita">
+            <div class="conteudo-categorias formulario-categoria">
+                <a href="{{ url_for('listar_categorias') }}" class="voltar">Voltar às categorias</a>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+
+
+                <h2>Editar categoria</h2>
+                <p class="descricao-titulo">Altere o nome da categoria.</p>
+                <form action="{{ url_for('editar_categorias', id=id) }}" method="post">
+                    <label for="nome_categoria">Nome</label>
+                    <input id="nome_categoria" name="nome_categoria" type="text" value="{{ categoria[0] }}" required>
+
+                    <label for="cor">Cor da categoria</label>
+                    <input id="cor" name="cor" type="color" value="{{ categoria[2] }}" required>
+
+                     <label>Escolha um ícone</label>
+                     <div class="grade-icones">
+                        <label class="opcao-icone">
+                            <input type="radio" name="icone" value="alimentacao.png"
+                            {% if categoria[3]=='alimentacao.png' %}checked{% endif %} required>
+                            <img src="{{ url_for('static', filename='img/icones/burger-solid-full.svg') }}" alt="Alimentação">
+                        </label>
+
+                        <label class="opcao-icone">
+                            <input type="radio" name="icone" value="transporte.png"
+                            {% if categoria[3]=='transporte.png' %}checked{% endif %}>
+                            <img src="{{ url_for('static', filename='img/icones/truck-solid-full.svg') }}" alt="Transporte">
+                        </label>
+
+                        <label class="opcao-icone">
+                            <input type="radio" name="icone" value="moradia.png"
+                            {% if categoria[3]=='moradia.png' %}checked{% endif %}>
+                            <img src="{{ url_for('static', filename='img/icones/house-solid-full.svg') }}" alt="Moradia">
+                        </label>
+
+                        <label class="opcao-icone">
+                            <input type="radio" name="icone" value="saude.png"
+                            {% if categoria[3]=='saude.png' %}checked{% endif %}>
+                            <img src="{{ url_for('static', filename='img/icones/heart-solid-full.svg') }}" alt="Saúde">
+                        </label>
+
+                        <label class="opcao-icone">
+                            <input type="radio" name="icone" value="lazer.png"
+                            {% if categoria[3]=='lazer.png' %}checked{% endif %}>
+                            <img src="{{ url_for('static', filename='img/icones/bicycle-solid-full.svg') }}" alt="Lazer">
+                        </label>
+
+                    </div>
+                    <button type="submit">Salvar alterações</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

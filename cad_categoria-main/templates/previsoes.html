@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Previsões</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/previsoes.css') }}">
+</head>
+<body>
+    <div class="header">
+       <img class="logo_branca" src="{{ url_for('static', filename='img/logo_branca.png') }}" alt="">
+
+
+       <div class="inicio_relatorio_previsao">
+           <a href="{{ url_for('dashboard') }}">Início</a>
+           <a href="{{ url_for('dashboard') }}">Relatório</a>
+           <a>Previsão</a>
+       </div>
+
+
+       <div class="icone_e_nome">
+           <a class="icone_user">
+                <img src="{{ url_for('static', filename=img) }}" alt="Foto de usuário">
+            </a>
+           <a href="{{ url_for('editar_usuario') }}"><p class="nome_user">Olá, {{nome}}</p></a>
+           <a href="{{ url_for('logout') }}" class="logout"><img src="{{ url_for('static', filename='img/logout.png') }}" alt="Símbolo de sair"></a>
+       </div>
+    </div>
+    <main>
+
+        <form action="{{ url_for('previsoes') }}" method="POST">
+            <label for="data_inicial">Data inicial</label>
+            <input type="date" id="data_inicial" name="data_inicial"
+                   value="{{ data_inicial.isoformat() }}" required>
+
+            <label for="data_final">Data final</label>
+            <input type="date" id="data_final" name="data_final"
+                   value="{{ data_final.isoformat() }}" required>
+
+            <button type="submit">Comparar períodos</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="boas_vindas">
+            <h2>Previsões</h2>
+            <p>Acompanhe seus ganhos, gastos e o resumo do seu mês.</p>
+        </div>
+
+        <div class="cards">
+            <div class="card saldo">
+                <div class="icone">＋</div>
+                <div>
+                    <h4>Receitas</h4>
+                    <h1>R$ Valor ficitício</h1>
+                    <p>Total de receitas ativas</p>
+                </div>
+            </div>
+
+            <div class="card despesas">
+                <div class="icone">+</div>
+                <div>
+                    <h4>Despesas</h4>
+                    <h1>R$ Valor fictício</h1>
+                    <p>Total de despesas ativas</p>
+                </div>
+            </div>
+            <div class="card extras">
+                <div class="icone">+</div>
+
+                <div>
+                    <h4>Serviços extras</h4>
+                    <h1>R$ Valor fictício</h1>
+
+                </div>
+            </div>
+
+            <div class="card saldo">
+                <div class="icone">+</div>
+
+                <div>
+                    <h4>Saldo</h4>
+                    <h1>R$ Valor fictício</h1>
+
+                </div>
+            </div>
+        </div>
+        <div class="graficos">
+            <div class="grafico">
+                <object
+                    type="image/svg+xml"
+                    data="{{ grafico }}"
+                    class="grafico-svg">
+                </object>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
