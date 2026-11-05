@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/icone-janela.png') }}">
+</head>
+
+<body class="pagina-dashboard">
+    <div class="header">
+        <img class="logo_branca" src="../static/img/logo_branca.png" alt="Logo">
+
+        <div class="inicio_relatorio_previsao">
+            <a href="{{ url_for('dashboard') }}">Início</a>
+            <a href="{{ url_for('relatorios') }}">Relatório</a>
+            <a href="{{ url_for('previsoes') }}">Previsão</a>
+        </div>
+
+
+        <div class="icone_e_nome">
+            <a class="icone_user">
+                <img src="{{ url_for('static', filename=img) }}" alt="Foto de usuário">
+            </a>
+
+
+            <a href="{{ url_for('editar_usuario') }}">
+                <p class="nome_user">Olá, {{ nome }}</p>
+            </a>
+
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                <img src="../static/img/logout.png" alt="Símbolo de sair">
+            </a>
+        </div>
+    </div>
+
+    <div class="financeiro">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="topo_dashboard">
+            <div class="boas_vindas">
+                <h2>Bem-vindo(a) {{ nome }}!</h2>
+                <p>Aqui está um resumo das suas finanças.</p>
+            </div>
+
+            <div class="filtro">
+                <form action="{{ url_for('dashboard') }}" method="POST">
+                    <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;">
+                        <label for="ano">Ano</label>
+                        <select name="ano" id="ano" required>
+                            <option disabled selected>Selecione um ano</option>
+                            {% for ano in anos %}
+                                <option value="{{ ano[0] }}">{{ ano[0] }}</option>
+                            {%endfor%}
+                        </select>
+
+                        <div id="div-mes" style="display: none;">
+                            <label for="mes">Mês</label>
+                            <select name="mes" id="mes" required>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="cards">
+            <div class="card saldo">
+                <div class="icone">＋</div>
+                <div>
+                    <h4>Receitas</h4>
+                    <h1>R$ {{ "%.2f"|format(receitas)|replace('.', ',') }}</h1>
+                    <p>Total de receitas ativas</p>
+                </div>
+            </div>
+
+            <div class="card despesas">
+                <div class="icone">+</div>
+                <div>
+                    <h4>Despesas</h4>
+                    <h1>R$ {{ "%.2f"|format(despesas)|replace('.', ',') }}</h1>
+                    <p>Total de despesas ativas</p>
+                </div>
+            </div>
+            <div class="card saldo">
+                <div class="icone">+</div>
+
+                <div>
+                    <h4>Saldo</h4>
+                    <h1>R$ {{ "%.2f"|format(saldo)|replace('.', ',') }}</h1>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container-graficos">
+
+        <div class="card-grafico">
+            <h3>Receitas x Despesas</h3>
+            <p>Comparativo das movimentações</p>
+
+            <object
+                type="image/svg+xml"
+                data="{{ grafico_movimentacoes }}"
+                class="grafico-svg">
+            </object>
+        </div>
+
+        <div class="card-grafico">
+            <form action="{{ url_for('dashboard') }}" method="POST" id="form-filtro">
+                <label for="tipo_grafico">Gráfico</label>
+
+                <select name="tipo_grafico" id="tipo_grafico">
+                    <option value="0" {% if tipo_grafico == '0' %}selected{% endif %}>Mensal</option>
+                    <option value="1" {% if tipo_grafico == '1' %}selected{% endif %}>Anual</option>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+            <h3>Saldo mensal</h3>
+            <p>Evolução do seu saldo</p>
+
+            <object
+                type="image/svg+xml"
+                data="{{ grafico_saldo }}"
+                class="grafico-svg">
+            </object>
+        </div>
+
+    </div>
+
+    <script defer src="{{ url_for('static', filename='js/busca-mes.js') }}"></script>
+</body>
+</html>

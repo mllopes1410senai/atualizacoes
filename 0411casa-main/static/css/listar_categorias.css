@@ -1,0 +1,612 @@
+
+@import url('cad_movimentacoes.css');
+
+:root {
+    --principal: #0D7C4E;
+    --secundaria: #16A34A;
+    --fundo_principal: #22C55E;
+    --suave: #DDF7E7;
+    --fundo_claro: #F7FAF8;
+    --branco: #FFFFFF;
+    --neutro: #1F2937;
+    --neutro_secundario: #6B7280;
+    --barra_grafico: #7DD4AF;
+    --cards_despesas: #ED4D5D;
+    --fundo_cards: #F2CDD2;
+    --cards_beneficios: #247FDD;
+    --fundo_beneficios: #D4E7F8;
+    --preto: #000000;
+    --fundo_cards1: #FFF2F4;
+}
+
+/* CABEÇALHO */
+
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: var(--principal);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header .logo_branca {
+    width: 95px;
+    height: auto;
+    margin-left: 16px;
+}
+
+.inicio_relatorio_previsao {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 120px;
+    margin-left: auto;
+    color: var(--branco);
+}
+
+.inicio_relatorio_previsao a,
+.inicio_relatorio_previsao p {
+    color: var(--branco);
+}
+
+.header .icone_e_nome {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: 25px;
+}
+
+.header .icone_e_nome .icone_user {
+    display: block;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: #E0EEE5;
+}
+
+.header .icone_e_nome .icone_user img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.header .icone_e_nome .nome_user {
+    color: var(--branco);
+    font-weight: 600;
+    font-size: 9px;
+}
+
+.logout img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ESTRUTURA PRINCIPAL */
+
+main {
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh - 70px);
+    display: flex;
+}
+
+.esquerda {
+    width: 35%;
+}
+
+.direita {
+    flex: 1;
+    padding: 35px;
+    min-width: 0;
+}
+
+.conteudo-categorias {
+    width: 620px;
+    max-width: 100%;
+    margin: 55px auto;
+}
+
+.conteudo-categorias .voltar {
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.conteudo-categorias h2 {
+    color: var(--neutro);
+    margin-top: 10px;
+}
+
+/* BARRA DE PESQUISA */
+
+.barra_pesquisa {
+    width: 100%;
+    margin: 22px 0 0;
+    padding: 14px 16px;
+    border: 1px solid #DCE5EF;
+    border-radius: 6px;
+    background-color: var(--branco);
+    box-sizing: border-box;
+}
+
+.barra_pesquisa h3 {
+    color: var(--neutro);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.barra_pesquisa form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.barra_pesquisa .campo_filtro {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.barra_pesquisa label {
+    display: none;
+}
+
+.barra_pesquisa input,
+.barra_pesquisa select {
+    width: 100%;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #DCE5EF;
+    border-radius: 5px;
+    background-color: var(--fundo_claro);
+    color: var(--neutro);
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.barra_pesquisa input:focus,
+.barra_pesquisa select:focus {
+    outline: none;
+    border-color: var(--principal);
+}
+
+.barra_pesquisa button {
+    width: 38px;
+    height: 36px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--principal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.barra_pesquisa button img {
+    display: block;
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.barra_pesquisa button:hover {
+    background-color: #095E3B;
+}
+
+/* LISTA DE CATEGORIAS */
+
+.lista-categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.item-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    min-height: 65px;
+    padding: 12px 16px;
+    background-color: var(--branco);
+    border: 1px solid #DCE5EF;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+.item-categoria:hover {
+    background-color: var(--fundo_claro);
+}
+
+/* ÍCONE E NOME DA CATEGORIA */
+
+.info-categoria {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.info-categoria img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.info-categoria span {
+    color: var(--neutro);
+    font-size: 14px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+/* BOTÕES DE AÇÃO */
+
+.acoes-categoria {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.acoes-categoria form {
+    margin: 0;
+}
+
+.acoes-categoria a,
+.acoes-categoria button {
+    display: inline-flex;
+    width: auto;
+    min-width: 65px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    border: none;
+    border-radius: 5px;
+    color: var(--branco);
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.botao-editar {
+    background-color: var(--principal);
+}
+
+.botao-editar:hover {
+    background-color: #095E3B;
+}
+
+.acoes-categoria .desativar {
+    background-color: #72726E;
+}
+
+.acoes-categoria .desativar:hover {
+    background-color: #555550;
+}
+
+.categoria-padrao,
+.sem-categorias {
+    color: var(--neutro_secundario);
+    font-size: 12px;
+}
+
+.categoria-padrao {
+    text-align: right;
+}
+
+/* MENSAGENS */
+
+.flash-messages {
+    margin: 15px 0;
+}
+
+.flash {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1024px) {
+    .inicio_relatorio_previsao {
+        gap: 45px;
+    }
+
+    .esquerda {
+        width: 25%;
+    }
+
+    .direita {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 760px) {
+    .inicio_relatorio_previsao {
+        gap: 20px;
+    }
+
+    .esquerda {
+        display: none;
+    }
+
+    .direita {
+        width: 100%;
+        padding: 22px;
+        box-sizing: border-box;
+    }
+
+    .conteudo-categorias {
+        margin: 30px auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .header .logo_branca {
+        width: 75px;
+        margin-left: 10px;
+    }
+
+    .inicio_relatorio_previsao {
+        gap: 12px;
+    }
+
+    .header .icone_e_nome {
+        margin-right: 10px;
+        gap: 5px;
+    }
+
+    .header .icone_e_nome .icone_user {
+        width: 32px;
+        height: 32px;
+    }
+
+    .logout img {
+        width: 27px;
+        height: 27px;
+    }
+
+    .item-categoria {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .info-categoria {
+        gap: 8px;
+    }
+
+    .info-categoria img {
+        width: 23px;
+        height: 23px;
+    }
+
+    .acoes-categoria {
+        gap: 5px;
+    }
+
+    .acoes-categoria a,
+    .acoes-categoria button {
+        min-width: 0;
+        padding: 0 8px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 400px) {
+    .inicio_relatorio_previsao {
+        gap: 8px;
+    }
+
+    .inicio_relatorio_previsao a {
+        font-size: 11px;
+    }
+
+    .header .icone_e_nome .nome_user {
+        font-size: 8px;
+    }
+
+    .direita {
+        padding: 12px;
+    }
+}
+/* MENU INFERIOR */
+.menu {
+    display: none;
+}
+
+/* TABLETS */
+@media (max-width: 760px) {
+    .header {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 70px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .inicio_relatorio_previsao {
+        gap: 20px;
+    }
+
+    .header .icone_e_nome {
+        margin-right: 10px;
+    }
+
+    .conteudo-categorias {
+        width: 100%;
+    }
+}
+
+/* CELULARES */
+@media (max-width: 600px) {
+    body {
+        padding-bottom: 64px;
+    }
+
+    .header {
+        height: 70px;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
+
+    .header .logo_branca {
+        width: 65px;
+        margin-left: 0;
+    }
+
+    /* Esconde o menu superior */
+    .inicio_relatorio_previsao {
+        display: none;
+    }
+
+    .header .icone_e_nome {
+        margin: 0;
+        gap: 7px;
+    }
+
+    .header .icone_e_nome .icone_user {
+        width: 30px;
+        height: 30px;
+    }
+
+    .header .icone_e_nome .nome_user {
+        font-size: 9px;
+    }
+
+    .logout img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .direita {
+        padding: 15px;
+    }
+
+    .conteudo-categorias {
+        margin: 20px auto;
+    }
+
+    .conteudo-categorias .voltar {
+        margin-bottom: 20px;
+    }
+
+    .barra_pesquisa {
+        padding: 12px;
+    }
+
+    .item-categoria {
+        flex-wrap: wrap;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .info-categoria {
+        flex: 1;
+        width: 100%;
+    }
+
+    .acoes-categoria {
+        width: 100%;
+    }
+
+    .acoes-categoria form {
+        flex: 1;
+    }
+
+    .acoes-categoria a,
+    .acoes-categoria button {
+        width: 100%;
+    }
+
+    .categoria-padrao {
+        width: 100%;
+        text-align: left;
+    }
+
+    /* MENU INFERIOR */
+    .menu {
+        display: flex;
+        width: 100%;
+        height: 64px;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        background-color: var(--principal);
+        align-items: center;
+        justify-content: space-around;
+        z-index: 1000;
+    }
+
+    .menu a,
+    .menu div {
+        width: 33.33%;
+        height: 64px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        gap: 4px;
+    }
+
+    .menu img {
+        width: 23px;
+        height: 23px;
+        object-fit: contain;
+    }
+
+    .menu p {
+        color: var(--branco);
+        font-size: 10px;
+        margin: 0;
+    }
+}
+
+/* CELULARES PEQUENOS */
+@media (max-width: 400px) {
+    .header .logo_branca {
+        width: 60px;
+    }
+
+    .header .icone_e_nome .nome_user {
+        font-size: 8px;
+    }
+
+    .direita {
+        padding: 12px;
+    }
+
+    .item-categoria {
+        gap: 10px;
+    }
+
+    .acoes-categoria a,
+    .acoes-categoria button {
+        font-size: 11px;
+    }
+}
